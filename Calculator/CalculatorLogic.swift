@@ -47,7 +47,7 @@ struct CalculatorLogic {
                     number = nil
                     equalsPushed = false
                     return 0
-                case "%": return n * 0.1
+                case "%": return n * 0.01
                 case _ where symbol == "=" && equalsPushed:
                     intermediateCalculation?.n1 = total
                     return performTwoNumCalculation(n2: n)
