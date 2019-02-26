@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     //MARK: - Properties
     private var calculator = CalculatorLogic()
     private var isFinishedTypingNumber: Bool = true
+    private var equalsPushed: Bool = false
     private var displayValue: Double {
         get {
             guard let displayDouble = Double(displayLabel.text!) else { fatalError("cannot convert display label to Double.") }
@@ -26,11 +27,9 @@ class ViewController: UIViewController {
             
             
             guard let number = Double(displayLabel.text!) else { fatalError("Cannot convert display label to Double.") }
-            print("displayValue: \(number)")
             return number
         }
         set {
-            print("displayValue: \(newValue)")
             let isInt = floor(newValue) == newValue
             
             if !isInt {
@@ -52,10 +51,12 @@ class ViewController: UIViewController {
         
         isFinishedTypingNumber = true
         
-        calculator.setNumber(displayValue)
+        if !equalsPushed {
+            calculator.setNumber(displayValue)
+        }
         
         if let calcMethod = sender.currentTitle {
-            if let result = calculator.calculate(symbol: calcMethod) {
+            if let result = calculator.calculate(symbol: calcMethod, equalsPushed: &equalsPushed) {
                 displayValue = result
             }
         }
